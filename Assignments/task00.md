@@ -19,4 +19,4 @@ n = scanner.nextInt();
 
 форкнуть означает, получить себе копию текущего репозитория, т.е. нажать кнопку fork
 
-![What is fork](/images/what_is_fork.PNG)
+![What is fork](https://github.com/nesterione/JavaTrainings/blob/master/Assignments/images/what_is_fork.PNG)
