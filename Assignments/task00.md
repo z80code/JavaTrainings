@@ -8,9 +8,15 @@
   * Форкнуть github репозиторий https://github.com/nesterione/JavaTrainings
   * Разместить выполненное задание в папке Homeworks
 
-hints:Для считывания значения с консоли можно использовать:
+hints:
+
+Для считывания значения с консоли можно использовать:
 ```java
 int n;
 Scanner scanner = new Scanner(System.in);
 n = scanner.nextInt();
 ```
+
+форкнуть означает, получить себе копию текущего репозитория, т.е. нажать кнопку fork
+
+![What is fork](/images/what_is_fork.PNG)
