@@ -1,4 +1,4 @@
-package Generics;
+package generics;
 
 /**
  * Created by igor on 13.06.2015.

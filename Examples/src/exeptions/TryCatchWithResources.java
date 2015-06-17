@@ -1,15 +1,15 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+package exeptions;
+
+import java.io.*;
 
 /**
  * Created by igor on 10.06.2015.
  */
-public class ThrowsExample {
+public class TryCatchWithResources {
 
-    public static void printFile() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("src/file.txt"));
+    public static void main(String[] args) {
+
+        try(BufferedReader br = new BufferedReader(new FileReader("src/file.txt"))) {
 
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -22,17 +22,13 @@ public class ThrowsExample {
 
             String everything = sb.toString();
             System.out.println(everything);
-    }
 
-    public static void main(String[] args) {
-
-        try {
-            printFile();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
     }
-
 }

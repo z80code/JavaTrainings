@@ -1,8 +1,11 @@
+package exeptions;
+
 import java.io.*;
 
-public class TryCatchFinallyMulti {
+public class TryCatchFinallyWithFile {
 
     public static void main(String[] args) {
+
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader("src/file.txt"));
@@ -19,12 +22,11 @@ public class TryCatchFinallyMulti {
             String everything = sb.toString();
             System.out.println(everything);
 
-            } catch (FileNotFoundException | EOFException  e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
 
             if(br!=null) {
                 try {
@@ -34,5 +36,9 @@ public class TryCatchFinallyMulti {
                 }
             }
         }
+
+
+
     }
+
 }
