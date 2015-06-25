@@ -83,12 +83,12 @@ public class TxtRepository implements Repository{
 
     @Override
     public List<PhoneRecord> getAll() {
-        return null;
+        return readFromFile();
     }
 
     @Override
     public void add(PhoneRecord phoneRecord) {
-
+        
     }
 
     @Override
