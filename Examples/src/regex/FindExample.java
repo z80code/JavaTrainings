@@ -24,9 +24,7 @@ public class FindExample {
             System.out.println(data);
 
 
-
             System.out.println("Found sequences:");
-
 
             String regex = "(\\d+)-(\\d+)";
             Pattern pattern = Pattern.compile(regex);
@@ -35,11 +33,6 @@ public class FindExample {
             while (matcher.find()) {
                 System.out.println(matcher.group());
             }
-
-
-
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
