@@ -3,10 +3,7 @@ package task01.bll;
 import task01.model.Phone;
 import task01.model.Record;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by igor on 22.06.2015.
@@ -64,7 +61,9 @@ public class InMemoryRepository implements Repository<Record> {
 
     @Override
     public void add(Record entity) {
-        records.add(entity);
+        if(entity!=null) {
+            records.add(entity);
+        }
     }
 
     @Override
@@ -98,7 +97,7 @@ public class InMemoryRepository implements Repository<Record> {
 
     @Override
     public void sort(Comparator<Record> comparator) {
-        records.sort(comparator);
+        Collections.sort(records,comparator);
     }
 
 }
