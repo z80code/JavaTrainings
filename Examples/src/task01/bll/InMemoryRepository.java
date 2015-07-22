@@ -33,10 +33,21 @@ public class InMemoryRepository implements Repository<Record> {
                 new Phone("домашний", "+375 12 546666"),
                 Arrays.asList("друг"));
 
+        Record r4 = new Record("User",
+                "lastNameа4",
+                new Phone("домашний", "+375 12 546666"),
+                Arrays.asList("друг"));
+        Record r5 = new Record("User",
+                "lastNameа4",
+                new Phone("домашний", "+375 12 546666"),
+                Arrays.asList("друг"));
 
         records.add(r1);
         records.add(r2);
         records.add(r3);
+        records.add(r4);
+        records.add(r5);
+
     }
 
     @Override
@@ -58,9 +69,23 @@ public class InMemoryRepository implements Repository<Record> {
         return records;
     }
 
+    @Override
+    public List<Record> get(Predicate<Record> predicate) {
+        List<Record> filtred = new ArrayList<>();
+
+        for(Record record : records) {
+            if(   predicate.predicate(record)    ) {
+                filtred.add(record);
+            }
+        }
+
+        return filtred;
+    }
+
 
     @Override
     public void add(Record entity) {
+
         if(entity!=null) {
             records.add(entity);
         }
@@ -97,7 +122,13 @@ public class InMemoryRepository implements Repository<Record> {
 
     @Override
     public void sort(Comparator<Record> comparator) {
+        Collections.sort(records, Comparators.BY_NAME_INC);
         Collections.sort(records,comparator);
+    }
+
+    @Override
+    public void save() {
+
     }
 
 }

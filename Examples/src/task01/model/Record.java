@@ -1,5 +1,8 @@
 package task01.model;
 
+import task01.bll.Comparators;
+
+import java.util.Date;
 import java.util.List;
 
 public class Record {
@@ -9,6 +12,7 @@ public class Record {
     private String lastName;
     private Phone phone;
     private List<String> tags;
+    private Date lastChange;
 
     // Для генирации уникальных Id
     private static int globalId = 0;

@@ -14,8 +14,10 @@ public interface Repository<T> {
      */
     T get(int id);
     List<T> getAll();
+    List<T> get(Predicate<T> predicate);
     void add(T entity);
     void remove(T entity);
     void update(T entity);
     void sort(Comparator<T> comparator);
+    void save();
 }

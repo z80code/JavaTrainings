@@ -13,7 +13,6 @@ public class Comparators {
 
         @Override
         public int compare(Record o1, Record o2) {
-
             return o1.getFirstName().compareTo( o2.getFirstName()  );
         }
     }
@@ -22,7 +21,6 @@ public class Comparators {
 
         @Override
         public int compare(Record o1, Record o2) {
-
             return o1.getLastName().compareTo( o2.getLastName() );
         }
     }
