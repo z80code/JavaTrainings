@@ -1,0 +1,48 @@
+package task01.ui;
+
+import hwskeleton.ui.*;
+import task01.bll.InMemoryRepository;
+import task01.bll.Predicate;
+import task01.bll.Repository;
+import task01.model.Record;
+
+import java.util.List;
+
+/**
+ * Created by igor on 16.07.2015.
+ */
+public class FiltereRun {
+
+    public static void main(String[] args) {
+        Repository<Record> repository = new InMemoryRepository();
+        UIHelper.printRecords(repository.getAll());
+
+        System.out.println("===============");
+
+
+//        List<Record> records = repository.get(new Predicate<Record>() {
+//            @Override
+//            public boolean predicate(Record value) {
+//                return value.getFirstName().equals("User");
+//            }
+//        });
+
+        String name = "user";
+
+        int n = 3;
+        List<Record> records = repository.get(new Predicate<Record>() {
+            @Override
+            public boolean predicate(Record value) {
+                return value.getId() < n;
+                //return value.getFirstName().contains(name);
+            }
+        });
+
+        UIHelper.printRecords(records);
+
+
+
+    }
+
+
+}
