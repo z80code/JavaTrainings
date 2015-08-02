@@ -46,8 +46,8 @@ public class MedianFilter {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        BufferedImage def = ImageIO.read(new File("src/gui/images/testimage.png"));
-        BufferedImage image = ImageIO.read(new File("src/gui/images/testimage.png"));
+        final BufferedImage def = ImageIO.read(new File("src/gui/images/testimage.png"));
+        final BufferedImage image = ImageIO.read(new File("src/gui/images/testimage.png"));
         medianFilter(image);
 
 
