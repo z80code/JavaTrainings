@@ -24,7 +24,6 @@ public class DetailsDialog extends JDialog {
         this.add(  new JLabel("Note: ")  );
         this.add(  new JLabel(note)  );
 
-
         JButton btn = new  JButton("Close");
 
         final JDialog dialog = this;

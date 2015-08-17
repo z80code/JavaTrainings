@@ -46,8 +46,9 @@ public class Run {
 }
 
 class PhoneNumber implements Serializable {
-    private String description;
     private long number;
+    private String description;
+
 
     public PhoneNumber(String description, long number) {
         this.description = description;

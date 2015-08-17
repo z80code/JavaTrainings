@@ -29,7 +29,7 @@ public class FiltereRun {
 
         String name = "user";
 
-        int n = 3;
+        final int n = 3;
         List<Record> records = repository.get(new Predicate<Record>() {
             @Override
             public boolean predicate(Record value) {

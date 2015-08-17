@@ -1,17 +1,17 @@
 package io;
 
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class BufferedReading {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+
+//        FileInputStream inputStream = new FileInputStream("file.txt");
+//        InputStreamReader inputStreamReader = new InputStreamReader(inputStream,"UTF-8");
+//        Reader reader= new BufferedReader(inputStreamReader);
 
         try(BufferedReader reader = new BufferedReader(new FileReader("src/io/file.txt"));) {
-
 
             StringBuilder stringBuilder = new StringBuilder();
             String s;

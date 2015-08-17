@@ -4,8 +4,7 @@ import sun.print.PeekGraphics;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /**
  * Created by igor on 30.07.2015.
@@ -47,14 +46,43 @@ public class GUI {
         frame.setLayout(new BorderLayout());
         JPanel topPanel = new JPanel();
 
-        final DrawPanel mainPanel = new DrawPanel();
+        Ball ball = new Ball(new Position(50,0), 70, new Color(255,0,0));
+        final Racquet racquet = new Racquet(
+                100,
+                20,
+                new Position(WINDOW_WIDTH/2, WINDOW_HEIGHT-10),
+                new Color(0,0,255) );
+
+
+
+
+
+
+
+
+       frame.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+                if(e.getKeyCode() == KeyEvent.VK_LEFT ) {
+                    racquet.moveLeft();
+                }
+
+                if(e.getKeyCode() == KeyEvent.VK_RIGHT ) {
+                    racquet.moveRight();
+                }
+            }
+        });
+
+
+
+        final DrawPanel mainPanel = new DrawPanel(ball, racquet);
 
         topPanel.setLayout(new FlowLayout());
 
         JButton btn1 = new JButton();
         btn1.setText("Create Ball");
-
-
 
         // 0 - speed OX
         // 1 - speed OY
@@ -91,13 +119,7 @@ public class GUI {
 
 
 
-        btn1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Ball ball = new Ball(new Position(50,0), 70, new Color(255,0,0));
-                mainPanel.setBall( ball );
-            }
-        });
+
 
         topPanel.add(btn1);
 
@@ -126,9 +148,9 @@ public class GUI {
 
         mainPanel.setBackground(new Color(152, 176, 255));
         topPanel.setBackground(new Color(1,255,1));
-        frame.add(topPanel, BorderLayout.NORTH);
-        frame.add(mainPanel, BorderLayout.CENTER);
 
+        //frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(mainPanel, BorderLayout.CENTER);
 
         frame.setVisible(true);
     }
@@ -190,18 +212,63 @@ class Ball {
     }
 }
 
+class Racquet {
+    private int width;
+    private int height;
+    private Position position;
+    private Color color;
+
+    private int step = 5;
+
+    public Racquet(int width, int height, Position position, Color color) {
+        this.width = width;
+        this.height = height;
+        this.position = position;
+        this.color = color;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * Center of Racquet
+     * @return
+     */
+    public Position getPosition() {
+        return position;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void moveRight() {
+        position.setX(  position.getX() + step  );
+    }
+
+    public void moveLeft() {
+        position.setX(  position.getX() - step  );
+    }
+}
+
 class DrawPanel extends JPanel {
 
     private Ball ball;
+    private Racquet racquet;
+
+    public DrawPanel(Ball ball, Racquet racquet) {
+        this.ball = ball;
+        this.racquet = racquet;
+    }
 
     public Ball getBall() {
         return ball;
     }
-
-    public void setBall(Ball ball) {
-        this.ball = ball;
-    }
-
 
     @Override
     public void paint(Graphics g) {
@@ -211,6 +278,16 @@ class DrawPanel extends JPanel {
             g.setColor(  ball.getColor()  );
             Position p = ball.getPosition();
             g.fillOval( p.getX(), p.getY(), ball.getD(), ball.getD() );
+        }
+
+        if(racquet!=null) {
+            g.setColor(  racquet.getColor()  );
+            Position p = racquet.getPosition();
+
+            int deltaX = racquet.getWidth()/2;
+            int deltaY = racquet.getHeight()/2;
+
+            g.fillRect(p.getX()-deltaX, this.getHeight()-racquet.getHeight(), racquet.getWidth(), racquet.getHeight() );
         }
     }
 

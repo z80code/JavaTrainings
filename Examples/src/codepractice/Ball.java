@@ -17,14 +17,14 @@ public class Ball {
         frame.setTitle("Ball");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        Graphics g = frame.getGraphics();
+        final Graphics g = frame.getGraphics();
 
         // TODO разобраться почему здесь использованы массивы из одного элемента
         // TODO улучшить, т.е. хранить эти параметны в некотором объекте
         final int[] x = {200};
         final int[] y = {50};
 
-        int size = 50;
+        final int size = 50;
         // HINT: нужно добавить шаг по OX
         final int[] step = {2};
 
