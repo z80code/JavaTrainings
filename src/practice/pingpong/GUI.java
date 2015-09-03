@@ -1,4 +1,4 @@
-package lesson.gui;
+package practice.pingpong;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,9 +55,6 @@ public class GUI {
 
 
 
-
-
-
        frame.addKeyListener(new KeyAdapter() {
 
             @Override
@@ -86,7 +83,7 @@ public class GUI {
         // 1 - speed OY
         final int[] speed = new int[2];
 
-        Timer timer = new Timer(20, new ActionListener() {
+        Timer timer = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -114,9 +111,6 @@ public class GUI {
             }
         });
         timer.start();
-
-
-
 
 
         topPanel.add(btn1);
@@ -147,7 +141,10 @@ public class GUI {
         mainPanel.setBackground(new Color(152, 176, 255));
         topPanel.setBackground(new Color(1,255,1));
 
-        //frame.add(topPanel, BorderLayout.NORTH);
+        frame.add(topPanel, BorderLayout.NORTH);
+
+        // mainPanel.setFocusable(true);
+
         frame.add(mainPanel, BorderLayout.CENTER);
 
         frame.setVisible(true);
@@ -155,138 +152,3 @@ public class GUI {
 
 }
 
-class Position {
-    private int x;
-    private int y;
-
-    public Position(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-}
-
-class Ball {
-    private Position position;
-    private int d;
-    private Color color;
-
-    public Ball(Position position, int d, Color color) {
-        this.position = position;
-        this.d = d;
-        this.color = color;
-    }
-
-    public void move(int dx, int dy) {
-        position.setX(  position.getX() + dx  );
-        position.setY(position.getY() + dy);
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public int getD() {
-        return d;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-}
-
-class Racquet {
-    private int width;
-    private int height;
-    private Position position;
-    private Color color;
-
-    private int step = 5;
-
-    public Racquet(int width, int height, Position position, Color color) {
-        this.width = width;
-        this.height = height;
-        this.position = position;
-        this.color = color;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    /**
-     * Center of Racquet
-     * @return
-     */
-    public Position getPosition() {
-        return position;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void moveRight() {
-        position.setX(  position.getX() + step  );
-    }
-
-    public void moveLeft() {
-        position.setX(  position.getX() - step  );
-    }
-}
-
-class DrawPanel extends JPanel {
-
-    private Ball ball;
-    private Racquet racquet;
-
-    public DrawPanel(Ball ball, Racquet racquet) {
-        this.ball = ball;
-        this.racquet = racquet;
-    }
-
-    public Ball getBall() {
-        return ball;
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-
-        if(ball!=null) {
-            g.setColor(  ball.getColor()  );
-            Position p = ball.getPosition();
-            g.fillOval( p.getX(), p.getY(), ball.getD(), ball.getD() );
-        }
-
-        if(racquet!=null) {
-            g.setColor(  racquet.getColor()  );
-            Position p = racquet.getPosition();
-
-            int deltaX = racquet.getWidth()/2;
-            int deltaY = racquet.getHeight()/2;
-
-            g.fillRect(p.getX()-deltaX, this.getHeight()-racquet.getHeight(), racquet.getWidth(), racquet.getHeight() );
-        }
-    }
-
-}
