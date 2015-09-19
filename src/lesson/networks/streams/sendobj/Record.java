@@ -1,0 +1,41 @@
+package lesson.networks.streams.sendobj;
+
+import java.io.Serializable;
+
+/**
+ * Created by igor on 17.09.2015.
+ */
+public class Record implements Serializable{
+
+    private String name;
+    private int number;
+
+    public Record(String name, int number) {
+        this.name = name;
+        this.number = number;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "name='" + name + '\'' +
+                ", number=" + number +
+                '}';
+    }
+}
