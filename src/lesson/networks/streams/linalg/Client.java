@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class Client {
 
+    private static Map<Integer, Column> columns;
+
     public static void printColumns(Map<Integer, Column> map) {
         for(Column c : map.values()) {
             System.out.printf("%d -> %s\n", c.getIndex(), Arrays.toString(c.getElements()));
@@ -28,7 +30,7 @@ public class Client {
 
         System.out.println("Connected");
 
-        Map<Integer, Column> columns = new HashMap<>();
+        columns = new HashMap<>();
 
         ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
         ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
@@ -36,6 +38,7 @@ public class Client {
         boolean isListen = true;
         while (isListen) {
             Pack pack = (Pack)input.readObject();
+
             switch (pack.getMessage()) {
 
                 case Send:
@@ -44,15 +47,45 @@ public class Client {
                     //printColumn(column);
                     break;
                 case Move:
+                    Move move = (Move) pack.getData();
+                    for(Integer key: columns.keySet()) {
+                        double[] els = columns.get(key).getElements();
+                        double tmp = els[move.getFrom()];
+                        els[move.getFrom()] = els[move.getTo()];
+                        els[move.getTo()] = tmp;
+                    }
                     break;
                 case End:
                     printColumns(columns);
                     isListen = false;
                     break;
+                case FindMaxRow:
+                    // можно оптимизировать, чтобы не инициировать перестановку строк, на главной и так максимальная
+                    Integer active = (Integer) pack.getData();
+                    if(columns.containsKey(active)) {
+                        int max = findMaxRos(active);
+                        output.writeObject(new Pack(Message.Move, new Move(active, max)));
+                    } else {
+                        output.writeObject(new Pack(Message.Cannot));
+                    }
+                    break;
+
             }
         }
 
         System.out.println("Correct end");
     }
 
+    public static int findMaxRos(int column) {
+        double[] col = columns.get(column).getElements();
+
+        int maxIdx = column;
+        for (int i = column; i <col.length; i++) {
+            if( Math.abs(col[i]) > Math.abs(col[maxIdx]) ) {
+                maxIdx = i;
+            }
+        }
+
+        return maxIdx;
+    }
 }

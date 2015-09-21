@@ -9,6 +9,10 @@ public class Pack implements Serializable{
     public Pack() {
     }
 
+    public Pack(Message message) {
+        this.message = message;
+    }
+
     public Pack(Message message, Object data) {
         this.message = message;
         this.data = data;
