@@ -48,18 +48,21 @@ public class Client {
                     break;
                 case Move:
                     Move move = (Move) pack.getData();
+                    System.out.println(move);
                     for(Integer key: columns.keySet()) {
                         double[] els = columns.get(key).getElements();
                         double tmp = els[move.getFrom()];
                         els[move.getFrom()] = els[move.getTo()];
                         els[move.getTo()] = tmp;
                     }
+                    output.writeObject(new Pack(Message.Ok));
                     break;
                 case End:
                     printColumns(columns);
                     isListen = false;
                     break;
                 case FindMaxRow:
+                    System.out.println("find row");
                     // можно оптимизировать, чтобы не инициировать перестановку строк, на главной и так максимальная
                     Integer active = (Integer) pack.getData();
                     if(columns.containsKey(active)) {
@@ -69,11 +72,56 @@ public class Client {
                         output.writeObject(new Pack(Message.Cannot));
                     }
                     break;
+                case SolveColumn:
+
+                    active = (Integer) pack.getData();
+                    if(columns.containsKey(active)) {
+                        double[] col = solveColumn(active);
+                        output.writeObject(new Pack(Message.DiffRows, new DiffRows(active,col)));
+                    } else {
+                        output.writeObject(new Pack(Message.Cannot));
+                    }
+
+                    break;
+                case DiffRows:
+                    DiffRows diffRow = (DiffRows)pack.getData();
+                    active = diffRow.getActive();
+
+                    for(Integer key: columns.keySet()) {
+                        if(key>= diffRow.getActive()) {
+                            double[] els = columns.get(key).getElements();
+                            for (int i = active+1, j = 0; i < els.length; i++, j++) {
+                                els[i] -= els[active]*diffRow.getElements()[j];
+                            }
+                        }
+                    }
+
+                    output.writeObject(new Pack(Message.Ok));
+
+                    break;
+                case GetColumns:
+
+                    output.writeObject(new Pack(Message.Result, columns));
+
+                    break;
 
             }
         }
 
         System.out.println("Correct end");
+    }
+
+    public static double[] solveColumn(int active) {
+        double[] col = columns.get(active).getElements();
+        double[] solveCol = new double[col.length-active-1];
+        double caf = 0;
+
+        for (int i = active+1,j=0; i <col.length ; i++, j++) {
+            caf = col[i]/col[active];
+            solveCol[j] = caf;
+        }
+
+        return solveCol;
     }
 
     public static int findMaxRos(int column) {
