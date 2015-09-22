@@ -51,7 +51,6 @@ public class SDemo {
 
     public static void main(String[] args) {
 
-
         List<Record> records = new ArrayList<>();
 
         records.add(new Record("name1", 12213));

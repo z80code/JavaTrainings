@@ -56,10 +56,13 @@ public class Run {
             }
         };
 
+
+
         final JLabel label = new JLabel();
         label.setText("not");
 
         final JTable table = new JTable(new DefaultTableModel(data,columnNames));
+
 
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);

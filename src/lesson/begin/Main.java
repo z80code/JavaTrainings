@@ -7,18 +7,29 @@ public class Main {
 
     public static void main(String[] args) {
 
+        int count = 10;
 
-        String f="";
+        String s = "";
+        for (int i = 0; i < count; i++) {
+            s+=","+i;
+        }
 
-        String ii = Integer.toString(1);
-        String d = ii;
-        //String f = "java "+ 4;
-        String f2 = " sfsdf";
-        String s = f + f2.toUpperCase();
-
-        System.out.println(  s   );
+        System.out.println(s);
 
 
+        String[] array = s.split(",");
+        int[] numbers = new int[count];
+
+        for(int i = 1; i< array.length; i++ ) {
+            //System.out.println(">>"+ array[i] +"<<");
+            numbers[i-1] = Integer.parseInt(array[i]);
+        }
+
+        int answer = 0;
+        for (int v : numbers) {
+            answer += v;
+        }
+        System.out.println(answer);
 
     }
 }

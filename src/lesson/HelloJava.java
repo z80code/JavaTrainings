@@ -11,6 +11,8 @@ public class HelloJava {
             markers[i] = new Marker(i,"Color"+i);
         }
 
+
+
         for(Marker marker : markers ) {
             System.out.println( marker );
         }

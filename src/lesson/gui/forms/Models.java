@@ -37,13 +37,13 @@ public class Models {
 //        };
 
         final Object[][] data = {
-                {"Kathy1", "Smith1", new Button( "sdf")},
-                {"Kathy2", "Smith2", new Button( "ff")},
-                {"Kathy3", "Smith3", new Button("f")}
+                {"Kathy1", "Smith1", true},
+                {"Kathy2", "Smith2", false},
+                {"Kathy3", "Smith3", false}
         };
 
 
-                TableModel model = new AbstractTableModel() {
+        TableModel model = new AbstractTableModel() {
 
 
 
