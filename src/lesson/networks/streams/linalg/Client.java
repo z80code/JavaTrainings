@@ -48,7 +48,7 @@ public class Client {
                     break;
                 case Move:
                     Move move = (Move) pack.getData();
-                    System.out.println(move);
+                    //System.out.println(move);
                     for(Integer key: columns.keySet()) {
                         double[] els = columns.get(key).getElements();
                         double tmp = els[move.getFrom()];
@@ -62,7 +62,7 @@ public class Client {
                     isListen = false;
                     break;
                 case FindMaxRow:
-                    System.out.println("find row");
+                    //System.out.println("find row");
                     // можно оптимизировать, чтобы не инициировать перестановку строк, на главной и так максимальная
                     Integer active = (Integer) pack.getData();
                     if(columns.containsKey(active)) {
