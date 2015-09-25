@@ -53,12 +53,13 @@ public class Client implements Runnable{
     @Override
     public void run() {
 
-        while (socket.isConnected()) {
+        while (isConnected()) {
 
             try {
                 String message = reader.readLine();
-                // TODO нужно убрать привязку
-                System.out.println(message);
+                if(action!=null) {
+                    action.receive(message);
+                }
 
             } catch (IOException e) {
                 isConnected = false;
@@ -67,7 +68,15 @@ public class Client implements Runnable{
         }
     }
 
+    private ReceiveAction action;
+
+    public void setReceiveAction(ReceiveAction action) {
+        this.action = action;
+    }
+
     public boolean isConnected() {
         return isConnected;
     }
+
+
 }
