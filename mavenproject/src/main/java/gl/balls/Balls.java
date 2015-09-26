@@ -11,8 +11,11 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import static com.jogamp.opengl.GL.*;
 import static com.jogamp.opengl.GL.GL_DEPTH_BUFFER_BIT;
@@ -35,12 +38,32 @@ public class Balls extends GLCanvas implements GLEventListener {
 
     /** The entry main() method to setup the top-level container and animator */
     public static void main(String[] args) {
+
         // Run the GUI codes in the event-dispatching thread for thread safety
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 // Create the OpenGL rendering canvas
-                GLCanvas canvas = new Balls();
+                // TODO ff
+                Balls b = new Balls();
+
+                GLCanvas canvas = b;
+
+                canvas.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        // TODO координаты преобразовывать в координаты GL
+
+                        //System.out.println(e.getX() +" "+ e.getY());
+                        float height = (( (canvas.getHeight()- e.getY())*6f)/canvas.getHeight());
+                        float x = ((e.getX()*6f)/canvas.getWidth());
+
+                        b.balls.add(new Ball(height,x));
+
+
+                    }
+                });
+
                 canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
 
                 // Create a animator that drives canvas' display() at the specified FPS.
@@ -102,6 +125,7 @@ public class Balls extends GLCanvas implements GLEventListener {
         gl.glShadeModel(GL_SMOOTH); // blends colors nicely, and smoothes out lighting
 
         createObjects();
+        balls.add(new Ball(4, 1.6f));
     }
 
     /**
@@ -136,7 +160,7 @@ public class Balls extends GLCanvas implements GLEventListener {
         GL2 gl = drawable.getGL().getGL2();  // get the OpenGL 2 graphics context
         gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear color and depth buffers
 
-        // ----- Render the Pyramid -----
+       /* // ----- Render the Pyramid -----
         gl.glLoadIdentity();                 // reset the model-view matrix
         gl.glTranslatef(-1.6f, 0.0f, -6.0f); // translate left and into the screen
         gl.glRotatef(anglePyramid, -0.2f, 1.0f, 0.0f); // rotate about the y-axis
@@ -176,26 +200,35 @@ public class Balls extends GLCanvas implements GLEventListener {
         gl.glVertex3f(-1.0f, -1.0f, 1.0f);
 
         gl.glEnd(); // of the pyramid
+*/
+        gl.glColor3f(0.0f, 1.0f, 0.0f); // Green
+        for(Ball ball: balls) {
+            gl.glLoadIdentity();                // reset the current model-view matrix
 
-        gl.glLoadIdentity();                // reset the current model-view matrix
-        gl.glTranslatef(1.6f, 0.0f, -7.0f); // translate right and into the screen
-        gl.glRotatef(anglePyramid, 1.0f, 1.0f, 1.0f); // rotate about the x, y and z-axes
+            //gl.glTranslatef(1.6f, -3.0f, -7.0f); // translate right and into the screen
 
+            gl.glTranslatef(ball.getX()-SCREEN_HEIGHT, ball.getHeight()-SCREEN_HEIGHT, -7.0f); // translate right and into the screen
 
-        gl.glPushMatrix();
-        // TODO -radius
-        gl.glTranslated(0.0, 0.0, -4);
+            if(ball.getVelocity()>0.001) {
+                gl.glRotatef(anglePyramid, 1.0f, 1.0f, 1.0f); // rotate about the x, y and z-axes
+            }
+            ball.updatePosition(System.currentTimeMillis());
+            //gl.glPushMatrix();
+            // TODO -radius
+            //gl.glTranslated(0.0, 0.0, -4);
 //        glTranslatef(gameContext.ball.x,gameContext.ball.y,gameContext.ball.z);
 //        gameContext.moveBall();
-
-        gl.glIndexi(BLUE_INDEX);
-        gl.glCallList(BALL);
-        gl.glPopMatrix();
-
+            gl.glIndexi(BLUE_INDEX);
+            gl.glCallList(BALL);
+            //gl.glPopMatrix();
+        }
         // Update the rotational angle after each refresh.
         anglePyramid += speedPyramid;
     }
 
+    java.util.List<Ball> balls = new ArrayList<>();
+
+    final float SCREEN_HEIGHT = 3f;
     final int BLUE_INDEX = 16;
 
     final int BALL = 1;
@@ -208,10 +241,12 @@ public class Balls extends GLCanvas implements GLEventListener {
         glu.gluQuadricDrawStyle(quadObj, glu.GLU_LINE);
 
         // TODO
-        glu.gluSphere(quadObj, 10, 16, 16);
+        glu.gluSphere(quadObj, RADIUD, 16, 16);
         gl.glEndList();
     }
 
+
+    final float RADIUD = 0.2f;
     /**
      * Called back before the OpenGL context is destroyed. Release resource such as buffers.
      */
