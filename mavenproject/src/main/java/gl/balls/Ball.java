@@ -39,25 +39,44 @@ public class Ball {
         if(lastTime!=0) {
 
             // время замедленно в 100 раз
-            float deltaT = (currentTime-lastTime)/100000f;
+            float deltaT = (currentTime-lastTime)/1000f;
             //System.out.println(deltaT);
             //v(t) = \frac{d}{dt} x(t)
 
             height -= velocity * deltaT;
             velocity += g * deltaT;
 
-            if (height < 0) {
-                height = 0;
-                velocity = 0;
-                g = 0;
+            if(g>1) {
+
+                if (height < 0) {
+                    velocity = -velocity/2;
+                    height=0;
+                    System.out.println(velocity);
+
+                    if (Math.abs(velocity) <1) {
+                        height = 0;
+                        velocity = 0;
+                        g = 0;
+                    }
+                    //g = 0;
+                }
             }
 
-        } else {
-            lastTime = currentTime;
         }
+            lastTime = currentTime;
+
         //v = s/t
         //a = s/t
 
 
     }
 }
+
+
+// F = ma
+// F = dp/dt
+// p = mv
+// F = ma
+
+// F = mg
+//
