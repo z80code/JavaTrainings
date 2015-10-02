@@ -3,6 +3,7 @@ package lesson.networks.streams.linalg;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
@@ -42,6 +43,21 @@ public class Server {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
 
+        int port = 9000;
+        int MDIM = 2000;
+        int N = 2;
+
+        if(args.length >=3) {
+            try {
+                port =  Integer.parseInt(args[0]);
+                MDIM =  Integer.parseInt(args[1]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.format("Server run with default params. Listening port: %d, Matrix dimension: %d, waiting %d clients", port, MDIM, N);
+        }
+
         //double[] b = {1, 5, 3, 4};
 
 //        double[][] A = {
@@ -51,7 +67,7 @@ public class Server {
 //                {7, 2, 9, 4}
 //        };
 
-        int MDIM = 2000;
+
         final double[][] A = getRandomIntegerMatrix(MDIM, 1, 1000);
         final double[] b = getRandomIntegerVector(MDIM, 1, 1000);
 
@@ -71,9 +87,7 @@ public class Server {
 
         ExecutorService pool = Executors.newFixedThreadPool(10);
 
-        int N = 2;
-
-        ServerSocket serverSocket = new ServerSocket(9000);
+        ServerSocket serverSocket = new ServerSocket(port);
         final ObjectOutputStream[] outputs = new ObjectOutputStream[N];
         final ObjectInputStream[] inputs = new ObjectInputStream[N];
 
@@ -242,9 +256,9 @@ public class Server {
 //        for (int i = 0; i <A.length; i++) {
 //            System.out.println(Arrays.toString(A[i]));
 //        }
-        System.out.println("===================");
-        System.out.println(Arrays.toString(b));
-        System.out.println("===================");
+//        System.out.println("===================");
+//        System.out.println(Arrays.toString(b));
+//        System.out.println("===================");
 
         // TODO добавить проверку на то, имеет ли система решения
         double[] X = new double[b.length]; //инициализация массива ответов
@@ -257,9 +271,9 @@ public class Server {
         }
 
         long end = System.currentTimeMillis();
-        System.out.println(end - start);
+        System.out.println("time elapsed: "+(end - start));
         // вывести на экран результат вычисления
-        System.out.println(Arrays.toString(X));
+        //System.out.println(Arrays.toString(X));
 
         // Дать сигнал на завершение работы всем клиентам
         for (ObjectOutputStream o : outputs) {
@@ -268,5 +282,11 @@ public class Server {
 
         System.out.println("Correct end");
 
+        pool.shutdown();
+
+        // Save results
+        try(PrintWriter writer = new PrintWriter("result.txt")) {
+            writer.println(Arrays.toString(X));
+        }
     }
 }

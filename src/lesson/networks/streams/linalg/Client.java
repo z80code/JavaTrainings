@@ -25,8 +25,23 @@ public class Client {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
+        InetAddress inetAddress  = InetAddress.getLocalHost();
+        int port = 9000;
+
+        if(args.length>=2) {
+            try {
+                inetAddress = Inet4Address.getByName(args[0]);
+                port = Integer.parseInt(args[1]);
+            } catch (Exception e) {
+                e.printStackTrace();
+                //System.out.println();
+            }
+        } else {
+            System.out.format("Run with default params, host: localhost, port: %d", port);
+        }
+
         Socket socket = new Socket();
-        socket.connect(new InetSocketAddress(InetAddress.getLocalHost(), 9000));
+        socket.connect(new InetSocketAddress(inetAddress, port));
 
         System.out.println("Connected");
 
@@ -58,12 +73,12 @@ public class Client {
                     output.writeObject(new Pack(Message.Ok));
                     break;
                 case End:
-                    printColumns(columns);
+                    //printColumns(columns);
                     isListen = false;
                     break;
                 case FindMaxRow:
                     //System.out.println("find row");
-                    // можно оптимизировать, чтобы не инициировать перестановку строк, на главной и так максимальная
+                    // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                     Integer active = (Integer) pack.getData();
                     if(columns.containsKey(active)) {
                         int max = findMaxRos(active);

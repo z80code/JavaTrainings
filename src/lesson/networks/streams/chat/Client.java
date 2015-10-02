@@ -9,14 +9,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-/**
- * Created by igor on 17.09.2015.
- */
 public class Client {
 
     public static void main(String[] args) throws IOException {
-
-
 
         final Scanner scanner = new Scanner(System.in);
         System.out.println("Please, enter your user name");
@@ -42,7 +37,6 @@ public class Client {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
 
                 }
             }

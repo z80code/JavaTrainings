@@ -7,7 +7,8 @@ public class Conds {
 
     public static void main(String[] args) {
 
-        // (условие) ? <вырожение> : <вырожени>
+
+        // (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ) ? <пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ> : <пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ>
         String[] strings = new String[5];
 
         strings[0] = "str 1";

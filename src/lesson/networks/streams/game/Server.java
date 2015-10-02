@@ -11,7 +11,6 @@ public class Server {
     public static void main(String[] args) throws IOException, InterruptedException {
         ServerSocket serverSocket = new ServerSocket(9000);
 
-
         while (true) {
 
             final GameContext context = new GameContext();
