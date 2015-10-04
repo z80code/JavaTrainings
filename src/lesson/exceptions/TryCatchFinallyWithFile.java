@@ -1,4 +1,4 @@
-package lesson.exeptions;
+package lesson.exceptions;
 
 import java.io.*;
 
