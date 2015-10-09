@@ -9,6 +9,7 @@ public class Using {
 
 
     public static void main(String[] args) {
+
         AbstractStorage s1 = StorageFactory.getStorage("txt");
         AbstractStorage s2 = StorageFactory.getStorage("db");
         AbstractStorage s3 = StorageFactory.getStorage("bin");

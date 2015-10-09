@@ -20,6 +20,7 @@ public class StorageFactory {
                 return new BinaryStorage();
             case "db":
                 return new DbStorage();
+                //return new TestStorage();
             default:
                 throw new RuntimeException("Illegal type of storage");
         }

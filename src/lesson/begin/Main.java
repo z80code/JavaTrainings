@@ -1,11 +1,13 @@
 package lesson.begin;
 
+import java.io.BufferedReader;
 import java.util.Random;
 
 public class Main {
 
 
     public static void main(String[] args) {
+        BufferedReader f;
 
         int count = 10;
 

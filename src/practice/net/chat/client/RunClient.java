@@ -26,7 +26,6 @@ public class RunClient {
 }
 
 class OnReceive implements ReceiveEvent {
-
     @Override
     public void receive(String message) {
         System.out.println(message);
