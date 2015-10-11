@@ -21,21 +21,31 @@ public class RunServer {
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
                         clientSocket.getOutputStream()));
                 //String s;
-                System.out.println("************");
-                boolean f = true;
+
 
                 ByteArrayOutputStream stream  = new ByteArrayOutputStream();
 
-                InputStream in = clientSocket.getInputStream();
-                int read = -1;
+                BufferedReader in =  new BufferedReader( new InputStreamReader(clientSocket.getInputStream()));
 
                 // Read headers
-                //String s=null;
-//                while ((read = in.read()) != -1) {
-//                    stream.write(read);
-//                    if (s.isEmpty()) {
-//                    }
-//                }
+
+                StringBuilder header = new StringBuilder();
+                String s=null;
+                while ((s = in.readLine())!=null) {
+                    if (s.isEmpty()) {
+                        break;
+                    }
+                    header.append(s);
+                }
+
+                String head = header.toString();
+                System.out.println(header);
+
+                if(head.startsWith("POST")) {
+                    System.out.println("PPPPPPPPPPPPPPPOOOOOOOOOOSSSSSSSTTTTTTTTTTT");
+                }
+
+                System.out.println("end recv header ");
 
                 //s.getBytes("ASCII");
                 //ASCII
@@ -43,7 +53,11 @@ public class RunServer {
                 //
                 //
 
+
                 //new String(b, "US-ASCII");
+
+
+                // answer
                 System.out.println("************");
 
                 System.out.println("Begin response");
