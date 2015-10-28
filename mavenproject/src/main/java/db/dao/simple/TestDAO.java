@@ -13,8 +13,7 @@ public class TestDAO extends AbstractDAO<Integer, TestEntity> {
     private final String INSERT_QUERY = "insert into test(id, name, number) values(?,?,?) ";
     private final String GET_BY_ID_QUERY = "select * from test where id=?";
     private final String REMOVE_QUERY = "delete from test where id=?";
-    private final String UPDATE_QUERY =
-            "update test set name=?, number=? where id = ?;";
+    private final String UPDATE_QUERY = "update test set name=?, number=? where id = ?;";
 
     public TestDAO() throws SQLException { }
 
