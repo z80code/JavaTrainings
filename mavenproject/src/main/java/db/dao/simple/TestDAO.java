@@ -34,6 +34,7 @@ public class TestDAO extends AbstractDAO<Integer, TestEntity> {
             }
 
         } catch (SQLException e) {
+
             System.out.println(e.getMessage());
         }
 
