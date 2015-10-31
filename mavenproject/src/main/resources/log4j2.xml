@@ -14,9 +14,10 @@
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File1"/>
         </Root>
-
         <!--/*additivity="false"-->
-        <Logger name="logging.Some" level="info" >
+
+        <Logger name="logging.MyLog" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
             <AppenderRef ref="File1"/>
         </Logger>
 

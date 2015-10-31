@@ -1,13 +1,19 @@
 package db.dao.simple;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TestDAO extends AbstractDAO<Integer, TestEntity> {
+
+    private static final Logger log = LogManager.getLogger(TestDAO.class);
 
     private final String SELECT_QUERY = "select * from test";
     private final String INSERT_QUERY = "insert into test(id, name, number) values(?,?,?) ";
@@ -20,8 +26,9 @@ public class TestDAO extends AbstractDAO<Integer, TestEntity> {
     @Override
     public boolean add(TestEntity entity) {
 
-        boolean isInsert = false;
+        log.info("add: "+entity);
 
+        boolean isInsert = false;
         try(PreparedStatement statement = connection.prepareStatement(INSERT_QUERY)) {
 
             statement.setInt(1, entity.getId());
@@ -29,13 +36,15 @@ public class TestDAO extends AbstractDAO<Integer, TestEntity> {
             statement.setDouble(3, entity.getNumber());
 
             int countUpdate = statement.executeUpdate();
+
+            log.info("updated: "+countUpdate);
+
             if(countUpdate>0) {
                 isInsert = true;
             }
 
         } catch (SQLException e) {
-
-            System.out.println(e.getMessage());
+            log.error(e);
         }
 
         return isInsert;
@@ -58,7 +67,7 @@ public class TestDAO extends AbstractDAO<Integer, TestEntity> {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
         return testEntities;
@@ -68,8 +77,8 @@ public class TestDAO extends AbstractDAO<Integer, TestEntity> {
     public boolean update(TestEntity entity) {
         boolean isUpdate = false;
 
-//        private final String UPDATE_QUERY =
-//                "update test(name, number) values(?,?) where id = ?";
+        log.info("update: " + entity);
+
         try(PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
 
             statement.setString(1, entity.getName());
@@ -77,12 +86,14 @@ public class TestDAO extends AbstractDAO<Integer, TestEntity> {
             statement.setInt(3, entity.getId());
 
             int countUpdate = statement.executeUpdate();
+            log.info("updated: " + countUpdate);
             if(countUpdate>0) {
                 isUpdate = true;
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+
+            log.error(Arrays.toString(e.getStackTrace()));
         }
 
         return isUpdate;
@@ -91,8 +102,12 @@ public class TestDAO extends AbstractDAO<Integer, TestEntity> {
     @Override
     public boolean remove(TestEntity entity) {
 
-        if(entity==null)
+        log.info("remove: "+entity);
+
+        if(entity==null) {
+            log.warn("null arg: "+entity);
             return false;
+        }
 
         boolean isRemoved = false;
 
@@ -101,12 +116,13 @@ public class TestDAO extends AbstractDAO<Integer, TestEntity> {
             statement.setInt(1,entity.getId());
 
             int countUpdate = statement.executeUpdate();
+            log.info("updated:" + countUpdate);
             if(countUpdate>0) {
                 isRemoved = true;
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            log.error(e);
         }
 
         return isRemoved;
@@ -130,7 +146,7 @@ public class TestDAO extends AbstractDAO<Integer, TestEntity> {
             testEntity =  new TestEntity(id,name,number);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
         return testEntity;
