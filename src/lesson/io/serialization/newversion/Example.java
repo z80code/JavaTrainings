@@ -12,6 +12,20 @@ public class Example {
         }
     }
 
+
+
+    public static void main(String[] args) {
+//        List<Record> records = new ArrayList<>();
+//        records.add(new Record(1,"name1", 3534534534L  ));
+//        records.add(new Record(3,"name3", 455874564L  ));
+//        records.add(new Record(6,"name4", 234L  ));
+//        print(records);
+//        System.out.println(saveTxt(records, "d:", "records.csv"));
+
+        List<Record> records = readTxt("d:\\records.csv");
+        print(records);
+    }
+
     public static boolean saveTxt(List<Record> records,
                                   String path,
                                   String fileName) {
@@ -28,9 +42,9 @@ public class Example {
 
                 for(Record r : records ) {
                     String line = String.format("%d;%s;%d\n",
-                                    r.getId(),
-                                    r.getName(),
-                                    r.getNumber());
+                            r.getId(),
+                            r.getName(),
+                            r.getNumber());
 
                     writer.write(line);
                 }
@@ -44,18 +58,6 @@ public class Example {
         } else {
             return false;
         }
-    }
-
-    public static void main(String[] args) {
-//        List<Record> records = new ArrayList<>();
-//        records.add(new Record(1,"name1", 3534534534L  ));
-//        records.add(new Record(3,"name3", 455874564L  ));
-//        records.add(new Record(6,"name4", 234L  ));
-//        print(records);
-//        System.out.println(saveTxt(records, "d:", "records.csv"));
-
-        List<Record> records = readTxt("d:\\records.csv");
-        print(records);
     }
 
     public static List<Record> readTxt(String fullPath) {
