@@ -30,14 +30,11 @@ public class CookiesExample extends HttpServlet {
 		response.getWriter().append(htmlForm);
 	}
 
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Cookie cookie = new Cookie("my", "value");
-		
 		// keep cookies one day
 		cookie.setMaxAge(60*60*24);
-		
 		response.addCookie(cookie);
 		doGet(request, response);
 	}

@@ -19,14 +19,55 @@ public class Test extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		
+		StringBuilder page = new StringBuilder();
+		
+		page.append("<html>");
+		page.append("<body>");
+		page.append("<form method='post' action='Test' >");
+		
+		page.append("Введите логин:<br>");
+		page.append("<input type='text' name='login' ><br>");
+		page.append("Введите пароль: <br>");
+		page.append("<input type='password' name='password' ><br>");
+		
+		page.append("<input type='submit' value='Войти' >");
+		
+		page.append("</form>");
+		page.append("</body>");
+		page.append("</html>");
+		
+		
+		response.getWriter().append(page);
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		String login = (String)request.getParameter("login");
+		String password = (String)request.getParameter("password");
+		
+		if(password.equals("123")) {
+			
+			StringBuilder page = new StringBuilder();
+			
+			page.append("<html>");
+			page.append("<body>");
+			page.append("Добро пожаловать ");
+			page.append(login);
+			page.append("</body>");
+			page.append("</html>");
+			
+			response.setContentType("text/html");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().append(page);
+			
+		} else {
+			doGet(request, response);
+		}
 	}
 
 }
