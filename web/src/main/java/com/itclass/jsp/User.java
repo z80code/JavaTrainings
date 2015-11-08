@@ -5,7 +5,6 @@ public class User {
 	private String old;
 	
 	public User() {
-		
 	}
 	
 	public User(String name, String old) {
