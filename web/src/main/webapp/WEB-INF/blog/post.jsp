@@ -15,10 +15,10 @@
 <br>
 <br>
 <h1> ${post.title} </h1>
-<p> Статья написана: ${post.created} / Изменена: ${post.lastChanged}  </p>
+<p> Статья написана: ${post.created} / Изменена: ${post.lastChange}  </p>
 
 <p> 
- Теги: <c:forEach var="tag" items="${post.tag}">
+ Теги: <c:forEach var="tag" items="${post.tags}">
 		<br>
 		<a href="#"> ${tag} </a> 
 	</c:forEach>

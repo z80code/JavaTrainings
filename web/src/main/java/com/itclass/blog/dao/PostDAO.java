@@ -11,13 +11,18 @@ public class PostDAO {
 
 	private static List<Post> posts;
 	
+	private static int currentId = 0;
+	public static int nextId() {
+		return currentId++;
+	}
+	
 	static {
 		String text = "text text text text text text text text text text text text text text text text text text ";
-		Post post1 = new Post(1, "Пост1", new Date(), new Date(), text, Arrays.asList("tag1", "tag2"));
-		Post post2 = new Post(2, "Пост2", new Date(), new Date(), text, Arrays.asList("tag2"));
-		Post post3 = new Post(3, "Пост3", new Date(), new Date(), text, Arrays.asList("tag2"));
-		Post post4 = new Post(4, "Пост4", new Date(), new Date(), text, Arrays.asList("tag1", "tag2", "tag3"));
-		Post post5 = new Post(5, "Пост5", new Date(), new Date(), text, Arrays.asList("tag2"));
+		Post post1 = new Post(nextId(), "Пост1", new Date(), new Date(), text, Arrays.asList("tag1", "tag2"));
+		Post post2 = new Post(nextId(), "Пост2", new Date(), new Date(), text, Arrays.asList("tag2"));
+		Post post3 = new Post(nextId(), "Пост3", new Date(), new Date(), text, Arrays.asList("tag2"));
+		Post post4 = new Post(nextId(), "Пост4", new Date(), new Date(), text, Arrays.asList("tag1", "tag2", "tag3"));
+		Post post5 = new Post(nextId(), "Пост5", new Date(), new Date(), text, Arrays.asList("tag2"));
 		
 		posts = new ArrayList<Post>();
 		posts.add(post1);
@@ -29,6 +34,21 @@ public class PostDAO {
 	
 	public List<Post> getAll() {
 		return PostDAO.posts;
+	}
+	
+	public Post get(int id) {
+		
+		for(Post post : PostDAO.posts) {
+			if(post.getId() == id) {
+				return post;
+			}
+		}
+		
+		return null;
+	}
+	
+	public void add(Post post) {
+		posts.add(post);
 	}
 	
 }

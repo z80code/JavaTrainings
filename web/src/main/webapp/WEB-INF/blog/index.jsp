@@ -10,8 +10,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-Index page
+Index page <a href="create" >Создать пост</a>
 
+<br>
 <c:forEach var="post" items="${posts}">
 	<br>
 	<a href="post?id=${post.id}"> ${post.title} </a>
