@@ -1,15 +1,22 @@
-package practice.files.stuff;
+package practice.files.serialization;
 
-public class Stuff implements Comparable<Stuff> {
+import java.io.*;
 
+//Serializable
+public class Stuff implements Comparable<Stuff>, Externalizable {
+
+    private static final long serialVersionUID = 2L;
+
+    // не сериилзуются transient и static
     private String type;
     private int count;
+
+    public Stuff() {}
 
     public Stuff(String type, int count) {
         setType(type);
         setCount(count);
     }
-        //   serialization
 
     public String getType() {
         return type;
@@ -39,5 +46,19 @@ public class Stuff implements Comparable<Stuff> {
     @Override
     public int compareTo(Stuff o) {
         return Integer.compare(this.getCount(), o.getCount());
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeInt(count);
+        out.writeUTF("other info");
+        out.writeUTF(type);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        count = in.readInt();
+        in.readUTF();
+        type = in.readUTF();
     }
 }
