@@ -1,7 +1,9 @@
 package lesson.oop.types;
 
-/**
- * Created by igor on 18.10.2015.
- */
+import javax.swing.*;
+
 public class FormIdea {
+    private JCheckBox checkBox1;
+
+
 }

@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.html.ObjectView;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -37,17 +38,31 @@ public class TableForm extends JFrame {
 
 
         addWindowListener(new WindowAdapter() {
-            @Override
 
+            @Override
             public void windowClosing(WindowEvent e) {
 
                 Vector rows = model.getDataVector();
 
-                for(Object row : rows ) {
-                    // !!! на самом деле row тоже вектор
-                    // Можно привести Vector r = (Vector)row;
-                    System.out.println(row);
+                List<Record> list = new ArrayList<Record>();
+
+                for(Object row : rows) {
+                    Vector r = (Vector)row;
+
+                    try {
+                        Record record = new Record(
+                                Integer.parseInt(r.get(0).toString()),
+                                (String) r.get(1),
+                                Long.parseLong(r.get(2).toString()));
+                        list.add(record);
+                    } catch (NumberFormatException ignore) {
+                        System.out.format("bad values: %s ", r.toString());
+                    }
                 }
+
+
+                FileHelper.saveTxt(list,"D:","records.csv");
+
             }
 
         });

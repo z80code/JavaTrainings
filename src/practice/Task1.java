@@ -1,4 +1,4 @@
-package codepractice;
+package practice;
 
 public class Task1 {
 
