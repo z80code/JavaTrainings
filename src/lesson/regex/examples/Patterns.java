@@ -15,6 +15,7 @@ public class Patterns {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();
         Matcher matcher = pattern.matcher(s);
+
         System.out.println( matcher.matches() );
 
     }
