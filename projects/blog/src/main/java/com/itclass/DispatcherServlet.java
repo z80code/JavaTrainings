@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.itclass.controllers.*;
 
-@WebServlet("/")
+@WebServlet("/dispatcher/*")
 public class DispatcherServlet extends HttpServlet {
 	private final static String BASE_VIEW_PATH = "/WEB-INF/views/";
 	private final static String VIEW_POSTFIX = ".jsp";
@@ -25,10 +25,15 @@ public class DispatcherServlet extends HttpServlet {
     	dispatcher.put("/home", new HomeController());
     	dispatcher.put("/", new HomeController());
     }
-        
+    
+    
+    
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String path = request.getServletPath();
+		String path = request.getRequestURI().substring(request.getContextPath().length()+"/dispatcher".length());
+		System.out.println(path);		
+		
+		
 		AbstractController controller = dispatcher.get(path);
 		
 		try {
@@ -37,7 +42,7 @@ public class DispatcherServlet extends HttpServlet {
 				.forward(request, response);
 			
 		} catch (Exception e) {
-			response.sendRedirect("fff");
+			//response.sendRedirect("fff");
 		}
 		
 	}

@@ -5,6 +5,7 @@
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/bootstrap/css/bootstrap.css" />
 </head>
 <body>
 Hello it is home page
