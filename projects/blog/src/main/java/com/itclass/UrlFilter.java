@@ -10,7 +10,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-@WebFilter("/*")
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Singleton;
+import com.itclass.services.BlogService;
+
+@Singleton
+@WebFilter //("/*")
 public class UrlFilter implements Filter {
 
     public UrlFilter() {
@@ -20,17 +26,22 @@ public class UrlFilter implements Filter {
 	public void destroy() {
 		// TODO Auto-generated method stub
 	}
-
+	
+	@Inject
+	private Injector injector;
+	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String path = req.getRequestURI().substring(req.getContextPath().length());
-
-		//System.out.println(path);
+		
+		//String path = req.getRequestURI();
+		//System.out.println(">>>>"+path+" "+req.getRequestURI());
 		if (path.startsWith("/resources/")) {
 		    // Just let container's default servlet do its job.
 		    chain.doFilter(request, response);
 		} else {
 		    // Delegate to your front controller.
+			request.setAttribute("injector", injector);
 		    request.getRequestDispatcher("/dispatcher" + path).forward(request, response);
 		}
 	}

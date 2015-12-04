@@ -10,19 +10,13 @@ import com.google.inject.Singleton;
 import com.itclass.model.Post;
 import com.itclass.services.BlogService;
 
-public class HomeController extends AbstractController {
+public class NotFoundController extends AbstractController {
 
-	@Inject
-	private BlogService service;
-	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		System.out.println("in home");
-		List<Post> posts = service.getAll();
-		System.out.println(posts);
 		//System.out.println(service);
-		return "home";
+		return "error";
 	}
 
 }
