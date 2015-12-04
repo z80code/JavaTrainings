@@ -10,8 +10,9 @@ public abstract class AbstractDAO<K,T> implements AutoCloseable {
 	
 	final protected Connection connection;
 	
-	public AbstractDAO() throws SQLException {
+	public AbstractDAO() throws SQLException, ClassNotFoundException {
 		
+		Class.forName("org.h2.Driver");
 		ResourceBundle resources = ResourceBundle.getBundle("connection");
 		
 		String url = resources.getString("db.url");
@@ -26,7 +27,7 @@ public abstract class AbstractDAO<K,T> implements AutoCloseable {
 	public abstract T get(K key);
 	public abstract void delete(K key);
 	public abstract void update(T entity);
-	public abstract void add(T entity);
+	public abstract void add(T entity) throws SQLException;
 	
 	@Override
 	public void close() throws Exception {
