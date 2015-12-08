@@ -37,6 +37,8 @@ public class DispatcherServlet extends HttpServlet {
 		dispatcher = new HashMap<>();
     	dispatcher.put("/home", HomeController.class);
     	dispatcher.put("/", HomeController.class);
+    	dispatcher.put("/login", LoginController.class);
+    	dispatcher.put("/secured/page", SecuredController.class);
     }
 	
 	
@@ -58,8 +60,12 @@ public class DispatcherServlet extends HttpServlet {
 			//System.out.println(controller);
 			String view = controller.execute(request, response);
 			
-			request.getRequestDispatcher(BASE_VIEW_PATH + view + VIEW_POSTFIX)
+			if(view.contains(":")) {
+				response.sendRedirect( request.getContextPath() +  view.split(":")[1]);
+			} else {
+				request.getRequestDispatcher(BASE_VIEW_PATH + view + VIEW_POSTFIX)
 				.forward(request, response);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
