@@ -9,13 +9,13 @@ public class TestConnection {
 
 	public static void main(String[] args) throws SQLException {
 	
-		AbstractDAO<Integer, Post> dao = new PostDAO();
+		/*AbstractDAO<Integer, Post> dao = new PostDAO();
 		List<Post> posts = dao.getAll();
 		
 		for(Post post: posts) {
 			System.out.println(post);
 		}
-
+*/
 	}
 
 }

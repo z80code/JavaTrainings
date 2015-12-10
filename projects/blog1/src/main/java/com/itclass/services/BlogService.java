@@ -34,4 +34,14 @@ public class BlogService {
 		
 	}
 	
+	public Post getPostById(int id) throws ClassNotFoundException, SQLException, Exception {
+		
+		Post post;
+		
+		try(AbstractDAO<Integer, Post> dao = new PostDAO()) {
+			post = dao.get(id);
+		}
+		
+		return post;
+	}
 }

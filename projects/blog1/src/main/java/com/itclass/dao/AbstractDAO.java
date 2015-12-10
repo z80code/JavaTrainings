@@ -24,7 +24,7 @@ public abstract class AbstractDAO<K,T> implements AutoCloseable {
 	
 	// CRUD
 	public abstract List<T> getAll() throws SQLException;
-	public abstract T get(K key);
+	public abstract T get(K key) throws SQLException;
 	public abstract void delete(K key);
 	public abstract void update(T entity);
 	public abstract void add(T entity) throws SQLException;

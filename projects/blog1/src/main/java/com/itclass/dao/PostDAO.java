@@ -48,10 +48,36 @@ public class PostDAO extends AbstractDAO<Integer, Post> {
 		return posts;
 	}
 
+	private final String GET_BY_ID_QUERY 
+		= "select * from posts where id=?";
+	
 	@Override
-	public Post get(Integer key) {
-		// TODO Auto-generated method stub
-		return null;
+	public Post get(Integer key) throws SQLException {
+		
+		Post post = null;
+		
+		try (PreparedStatement statement 
+				= connection.prepareStatement(GET_BY_ID_QUERY)) {
+
+			statement.setInt(1, key);	
+			ResultSet resultSet = statement.executeQuery();
+			resultSet.next();
+			
+			Integer id = resultSet.getInt("id");
+			String title = resultSet.getString("title");
+			Timestamp created = resultSet.getTimestamp("created");
+			Timestamp lastChanged = resultSet.getTimestamp("lastChanged");
+			Clob content = resultSet.getClob("content");
+			String tags = resultSet.getString("tags");
+
+			post = new Post(id, title, new Date(created.getTime()), new Date(lastChanged.getTime()),
+			// TODO только если не предпологается, что в CLOB
+			// количество символов < int
+			content.getSubString(1L, (int) content.length()), tags);
+		}
+		
+		
+		return post;
 	}
 
 	@Override
