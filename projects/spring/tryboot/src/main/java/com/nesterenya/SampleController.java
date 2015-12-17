@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class SampleController {
 	
-	@RequestMapping("/")
-    @ResponseBody
+	@RequestMapping("/index")
     String home() {
-        return "Hello World!";
+        return "index";
     }
 	
 }
