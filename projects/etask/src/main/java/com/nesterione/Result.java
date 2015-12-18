@@ -1,6 +1,7 @@
 package com.nesterione;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class Result {
     private String login;
@@ -49,13 +50,13 @@ public class Result {
         this.mark = mark;
     }
 
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    public String getStringDate() {
+        return dateFormat.format(new java.util.Date(date.getTime()));
+    }
+
     @Override
     public String toString() {
-        return "Result{" +
-                "login='" + login + '\'' +
-                ", test='" + test + '\'' +
-                ", date=" + date +
-                ", mark=" + mark +
-                '}';
+        return login + ";" + test + ";" + getStringDate() + ";" + mark;
     }
 }

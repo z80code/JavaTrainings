@@ -19,3 +19,9 @@ create table results(
      FOREIGN KEY(testId) REFERENCES tests(idTest) ON UPDATE CASCADE
 );
 
+
+select name, avg(  cast( mark as double) )  as mean
+from logins
+inner join results on logins.idLogin = results.loginId
+group by name
+order by mean desc;

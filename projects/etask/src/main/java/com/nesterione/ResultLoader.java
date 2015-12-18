@@ -58,7 +58,8 @@ public class ResultLoader {
         try {
             PreparedStatement psGetIdByLogin = connection.prepareStatement("SELECT idLogin FROM logins WHERE name = ?");
             PreparedStatement psGetIdByTest = connection.prepareStatement("SELECT idTest FROM tests WHERE name = ?");
-            PreparedStatement psInsertLogin = connection.prepareStatement("INSERT INTO logins(name) values(?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement psInsertLogin = connection.prepareStatement("INSERT INTO logins(name) values(?)",
+                    Statement.RETURN_GENERATED_KEYS);
             PreparedStatement psInsertTest = connection.prepareStatement("INSERT INTO tests(name) values(?)", Statement.RETURN_GENERATED_KEYS);
 
             PreparedStatement psInsertResult = connection.prepareStatement("INSERT INTO results(loginId,testId,dat,mark) values(?,?,?,?)");

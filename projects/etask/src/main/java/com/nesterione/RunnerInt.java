@@ -10,15 +10,22 @@ public class RunnerInt {
 
     public static void main(String[] args) throws LoaderException, SQLException, ClassNotFoundException {
 
-        ResultDAO resultDAO = new CsvResult("e:/students.csv");
+        ResultFactory resultFactory = new ResultFactory();
+        RunnerLogic.doIt(resultFactory, "results");
+
+//        ResultDAO reader = new CsvResult("e:/students.csv");
+//        ResultFactory resultFactory = new ResultFactory();
+//        RunnerLogic.doIt(reader, resultFactory);
+
+        /*ResultDAO resultDAO = new CsvResult("e:/students.csv");
         ResultLoader.loadResults(resultDAO);
 
         //3
         String aggregationQuery = "select name, avg(  cast( mark as double) )  as mean\n" +
-                                 "from logins\n" +
-                                 "inner join results on logins.idLogin = results.loginId\n" +
-                                 "group by name\n" +
-                                 "order by mean desc;";
+                "from logins\n" +
+                "inner join results on logins.idLogin = results.loginId\n" +
+                "group by name\n" +
+                "order by mean desc;";
 
         PreparedStatement statement = ConnectionManager.getConnection().prepareStatement(aggregationQuery);
         ResultSet resultSet = statement.executeQuery();
@@ -29,6 +36,6 @@ public class RunnerInt {
 
             System.out.format("%s, %.2f\n",name, mean);
         }
-
+*/
     }
 }

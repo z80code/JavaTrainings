@@ -1,31 +1,25 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!-- 
-<%@attribute name="header" fragment="true" %>
-<%@attribute name="footer" fragment="true" %> -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
     
-    <link rel="icon" href="${pageContext.request.contextPath}/resources/favicon.ico">
+    <link rel="icon" href="../../favicon.ico">
 
-    <title>Блог</title>
+    <title>Sticky Footer Navbar Template for Bootstrap</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" 
-	href="${pageContext.request.contextPath}/resources/assets/bootstrap/css/bootstrap.min.css" />
-    
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
     <!-- Custom styles for this template -->
-    <link href="${pageContext.request.contextPath}/resources/styles/Style.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/style.css" >
+    
 
   </head>
 
@@ -67,25 +61,23 @@
 
     <!-- Begin page content -->
     <div class="container">
-      
-      <jsp:doBody/>
     
+    <jsp:doBody/>
+        
     </div>
 
     <footer class="footer">
       <div class="container">
-        <p class="text-muted">Java</p>
+        <p class="text-muted">Place sticky footer content here.</p>
       </div>
     </footer>
 
-
-    <!-- Bootstrap core JavaScript -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/bootstrap/js/bootstrap.min.js" ></script>
-    
+    <!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+ 
   </body>
 </html>
-
-
-
-

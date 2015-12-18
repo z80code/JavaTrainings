@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 public class ConnectionManager {
 
-
     private static final String URI = "jdbc:h2:~/jsedb";
     private static final String USER = "jse";
     private static final String PASSWORD = "jse";
@@ -25,5 +24,6 @@ public class ConnectionManager {
 
         return connection;
     }
+
 
 }
