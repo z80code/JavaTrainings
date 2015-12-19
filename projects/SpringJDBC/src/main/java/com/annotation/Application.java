@@ -30,7 +30,19 @@ public class Application {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(Application.class);
 
+
         BlogDAO dao = context.getBean(BlogDAO.class);
+
+        /*
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setUsername("igor");
+        ds.setPassword("123");
+        ds.setDriverClassName("org.h2.Driver");
+        ds.setUrl("jdbc:h2:~/blogdb");
+
+        BlogDAO dao = new BlogDAOImpl();
+        dao.setDataSource(ds);
+        */
 
         System.out.println(dao.getAll());
     }

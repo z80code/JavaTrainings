@@ -11,7 +11,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        ApplicationContext context =
+              ApplicationContext context =
                 new FileSystemXmlApplicationContext
                         ("file:src/main/java/com/nesterione/beans.xml");
 
@@ -20,6 +20,7 @@ public class App
         System.out.println(dao.getAll());
 
         Post post = (Post)context.getBean("post");
+
         System.out.println(post);
     }
 }

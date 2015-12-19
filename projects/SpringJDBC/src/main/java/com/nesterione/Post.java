@@ -8,7 +8,6 @@ public class Post {
     private Date created;
     private Date lastChanged;
     private String content;
-    // TODO пока хранится как строка, нужно хранить в отдельной таблице
     private String tags;
 
     public Post() { }
