@@ -20,6 +20,19 @@ public class Ball {
         this.color = color;
     }
 
+    // TODO
+    private float mu = 30f;
+
+    public void updatePosition(float time) {
+
+        int dx = (int)(velocityX * time);
+        int dy = (int)(velocityY * time);
+        move(dx,dy);
+
+        velocityX *= mu * time;
+        velocityY *= mu * time;
+    }
+
     public void move(int stepByX, int stepByY) {
         position.setX( position.getX() + stepByX );
         position.setY( position.getY() + stepByY );

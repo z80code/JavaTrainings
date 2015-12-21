@@ -1,28 +1,23 @@
-package practice.soccer;
+package practice.soccernext;
 
 import java.awt.*;
 
-public class Player {
+public class Ball {
 
     private Point position;
     private int radius;
     private Color color;
-    private float speed;
+    private float velocityX;
+    private float velocityY;
 
-    private int hitRadius;
-    private boolean isHit;
-
-
-    public Player(int x, int y, int radius, Color color, float speed) {
-        this(new Point(x,y),radius,color, speed);
+    public Ball(int x, int y, int radius, Color color) {
+        this(new Point(x,y), radius, color);
     }
 
-    public Player(Point position, int radius, Color color, float speed) {
+    public Ball(Point position, int radius, Color color) {
         this.position = position;
         this.radius = radius;
         this.color = color;
-        this.speed = speed;
-        hitRadius = 2*radius;
     }
 
     public void move(int stepByX, int stepByY) {
@@ -54,19 +49,19 @@ public class Player {
         this.color = color;
     }
 
-    public float getSpeed() {
-        return speed;
+    public float getVelocityX() {
+        return velocityX;
     }
 
-    public int getHitRadius() {
-        return hitRadius;
+    public void setVelocityX(float velocityX) {
+        this.velocityX = velocityX;
     }
 
-    public boolean isHit() {
-        return isHit;
+    public float getVelocityY() {
+        return velocityY;
     }
 
-    public void setHit(boolean hit) {
-        isHit = hit;
+    public void setVelocityY(float velocityY) {
+        this.velocityY = velocityY;
     }
 }
