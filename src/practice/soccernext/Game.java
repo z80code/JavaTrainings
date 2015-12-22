@@ -1,7 +1,10 @@
 package practice.soccernext;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Game extends JFrame {
 
@@ -14,23 +17,32 @@ public class Game extends JFrame {
         final Scene scene = new Scene(getWidth(), getHeight());
         add(scene);
 
-        final boolean[] keys = new boolean[4];
+        final int MIN_FRAMETIME_MSECS = 33;
 
-        Timer timer = new Timer(30, new ActionListener() {
+        Timer timer = new Timer(33, new ActionListener() {
+
+            long prevTime = System.currentTimeMillis();
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                 //TODO
-                int step = 3;
-                int x = 0;
-                int y = 0;
 
-                if(keys[0]) y-=step;
-                if(keys[1]) x+=step;
-                if(keys[2]) y+=step;
-                if(keys[3]) x-=step;
+                long currTime = System.currentTimeMillis();
+                long timeElapsed = currTime - prevTime;
+                if (timeElapsed < MIN_FRAMETIME_MSECS) {
+                    // Not enough time has elapsed. Let's limit the frame rate
+                    try {
+                        Thread.sleep(MIN_FRAMETIME_MSECS - timeElapsed);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
 
-                scene.getPlayer().move(x,y);
-                scene.repaint();
+                    currTime = System.currentTimeMillis();
+                    timeElapsed = currTime - prevTime;
+                }
+                prevTime = currTime;
+
+                float timeSec = timeElapsed / 20;
+                scene.update(timeSec);
             }
         });
 
@@ -41,17 +53,38 @@ public class Game extends JFrame {
             @Override
             public void keyReleased(KeyEvent e) {
                 switch (e.getKeyCode()) {
+
+                    case KeyEvent.VK_W:
+                        scene.getPlayer2().setVelocityY(0);
+                        break;
+                    case KeyEvent.VK_A:
+                        scene.getPlayer2().setVelocityX(0);
+                        break;
+                    case KeyEvent.VK_S:
+                        scene.getPlayer2().setVelocityY(0);
+                        break;
+                    case KeyEvent.VK_D:
+                        scene.getPlayer2().setVelocityX(0);
+                        break;
+                    case KeyEvent.VK_CONTROL:
+                        scene.hitUp(scene.getPlayer2());
+                        break;
+
+
                     case KeyEvent.VK_UP:
-                        keys[0] = false;
+                        scene.getPlayer1().setVelocityY(0);
                         break;
                     case KeyEvent.VK_RIGHT:
-                        keys[1] = false;
+                        scene.getPlayer1().setVelocityX(0);
                         break;
                     case KeyEvent.VK_DOWN:
-                        keys[2] = false;
+                        scene.getPlayer1().setVelocityY(0);
                         break;
                     case KeyEvent.VK_LEFT:
-                        keys[3] = false;
+                        scene.getPlayer1().setVelocityX(0);
+                        break;
+                    case KeyEvent.VK_SPACE:
+                        scene.hitUp(scene.getPlayer1());
                         break;
                 }
             }
@@ -59,20 +92,38 @@ public class Game extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
+
+                    case KeyEvent.VK_W:
+                        scene.getPlayer2().setVelocityY(-scene.getPlayer2().getSpeed());
+                        break;
+                    case KeyEvent.VK_D:
+                        scene.getPlayer2().setVelocityX(scene.getPlayer2().getSpeed());
+                        break;
+                    case KeyEvent.VK_S:
+                        scene.getPlayer2().setVelocityY(scene.getPlayer2().getSpeed());
+                        break;
+                    case KeyEvent.VK_A:
+                        scene.getPlayer2().setVelocityX(-scene.getPlayer2().getSpeed());
+                        break;
+                    case KeyEvent.VK_CONTROL:
+                        scene.hitDown(scene.getPlayer2());
+                        break;
+
+
                     case KeyEvent.VK_UP:
-                        keys[0] = true;
+                        scene.getPlayer1().setVelocityY(-scene.getPlayer1().getSpeed());
                         break;
                     case KeyEvent.VK_RIGHT:
-                        keys[1] = true;
+                        scene.getPlayer1().setVelocityX(scene.getPlayer1().getSpeed());
                         break;
                     case KeyEvent.VK_DOWN:
-                        keys[2] = true;
+                        scene.getPlayer1().setVelocityY(scene.getPlayer1().getSpeed());
                         break;
                     case KeyEvent.VK_LEFT:
-                        keys[3] = true;
+                        scene.getPlayer1().setVelocityX(-scene.getPlayer1().getSpeed());
                         break;
                     case KeyEvent.VK_SPACE:
-                        // TODO hit logic here
+                        scene.hitDown(scene.getPlayer1());
                         break;
                 }
             }

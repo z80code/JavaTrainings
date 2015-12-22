@@ -7,6 +7,7 @@ public class Ball {
     private Point position;
     private int radius;
     private Color color;
+
     private float velocityX;
     private float velocityY;
 
@@ -18,6 +19,33 @@ public class Ball {
         this.position = position;
         this.radius = radius;
         this.color = color;
+    }
+
+    private float mu = -0.5f;
+    //private float ax = 0;
+    //private float ay = 0;
+
+    public void updatePosition(float time) {
+
+        int dirX = velocityX<0?-1:1;
+        int dirY = velocityY<0?-1:1;
+
+        velocityX += dirX * mu*time;
+        velocityY += dirY * mu*time;
+
+        //System.out.println(dirX * mu*time);
+
+        if(Math.abs(velocityX)>0.5) {
+            position.setX((int) (getPosition().getX() + velocityX * time));
+        }
+        if(Math.abs(velocityY)>0.5) {
+            position.setY((int) (getPosition().getY() + velocityY * time));
+        }
+
+        //ax = ax * mu * time;
+        //ay = ay * mu * time;
+
+        
     }
 
     public void move(int stepByX, int stepByY) {

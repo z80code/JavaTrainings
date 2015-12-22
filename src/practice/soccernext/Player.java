@@ -7,6 +7,10 @@ public class Player {
     private Point position;
     private int radius;
     private Color color;
+    private float speed = 5;
+    private boolean isHit;
+    private float velocityX;
+    private float velocityY;
 
     public Player(int x, int y, int radius, Color color) {
         this(new Point(x,y),radius,color);
@@ -16,6 +20,10 @@ public class Player {
         this.position = position;
         this.radius = radius;
         this.color = color;
+    }
+
+    public void updatePosition(float time) {
+        move((int)(velocityX*time), (int) (velocityY * time));
     }
 
     public void move(int stepByX, int stepByY) {
@@ -45,5 +53,33 @@ public class Player {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setHit(boolean hit) {
+        isHit = hit;
+    }
+
+    public float getVelocityX() {
+        return velocityX;
+    }
+
+    public void setVelocityX(float velocityX) {
+        this.velocityX = velocityX;
+    }
+
+    public float getVelocityY() {
+        return velocityY;
+    }
+
+    public void setVelocityY(float velocityY) {
+        this.velocityY = velocityY;
     }
 }
