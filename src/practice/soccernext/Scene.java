@@ -2,24 +2,21 @@ package practice.soccernext;
 
 import javax.swing.*;
 import javax.swing.text.Position;
+import javax.swing.text.StringContent;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Scene extends JPanel {
 
     private Field field;
-    private Player player1;
-    private Player player2;
     private Ball ball;
+
+    Map<String, Player> players = new HashMap<>();
 
     public Scene(int width, int height) {
 
-        field = new Field(width,
-                height,
-                new Color(144, 199, 6));
-
-        player1 = new Player(0,0, 20, new Color(17, 18, 255) );
-        player2 = new Player(0,0, 20, new Color(255, 10, 5) );
-
+        field = new Field(width,height, new Color(144, 199, 6));
         ball = new Ball(200,100, 15, new Color(238, 229, 162));
     }
 
@@ -58,14 +55,13 @@ public class Scene extends JPanel {
     }
 
     public void update(float time) {
-        ball.updatePosition(time);
 
-
-        if(ball.getPosition().getX() < 0) {
-            ball.getPosition().setX( -ball.getPosition().getX() );
+        if(ball.getPosition().getX() < ball.getRadius()) {
+            ball.getPosition().setX(ball.getRadius() +ball.getPosition().getX() );
             ball.setVelocityX( -ball.getVelocityX() );
         }
 
+        //TODO check boundaries
         if(ball.getPosition().getY() < 0) {
             ball.getPosition().setY( -ball.getPosition().getY() );
             ball.setVelocityY( -ball.getVelocityY() );
@@ -84,8 +80,9 @@ public class Scene extends JPanel {
             ball.setVelocityY( -ball.getVelocityY() );
         }
 
-        getPlayer1().updatePosition(time);
-        getPlayer2().updatePosition(time);
+        players.forEach((k,v)-> v.updatePosition(time));
+        players.forEach(  (k,v) -> updBall(v,time) );
+        ball.updatePosition(time);
 
         repaint();
     }
@@ -110,36 +107,31 @@ public class Scene extends JPanel {
                 player.getRadius()*2);
     }
 
-    private void updBall(Player player) {
+    private void updBall(Player player, float time) {
         //TODO
         Point pp = player.getPosition();
         Point pb = ball.getPosition();
         float dist = distance(pp,pb);
 
-        if(  dist < (player.getRadius() + ball.getRadius())  ) {
+        if(  dist < (player.getRadius() + ball.getRadius() + 2)  ) {
 
-            float dx = pb.getX() - pp.getX();
-            float dy = pb.getY() - pp.getY();
-
-            ball.move((int)(dx*0.2), (int)(dy*0.2));
-
+            float dx = -pp.getX() + pb.getX();
+            float dy = -pp.getY() + pb.getY();
+            float value = Math.abs(dx) + Math.abs(dy);
+            getBall().setVelocityX(ball.getVelocityX() + Math.abs( player.getVelocityX()) * (dx / value ));
+            getBall().setVelocityY(ball.getVelocityY() + Math.abs(player.getVelocityY()) * (dy / value ));
         }
     }
 
     @Override
     public void paint(Graphics g) {
 
-        updBall(player1);
-        updBall(player2);
-
         g.setColor(field.getColor());
         g.fillRect(0,0, field.getWidth(),field.getHeight());
 
-
         Point p;
-        drawPlayer(g,player1);
-        drawPlayer(g,player2);
 
+        players.forEach((k,v)->drawPlayer(g,v));
 
         g.setColor(ball.getColor());
         p = ball.getPosition();
@@ -154,11 +146,7 @@ public class Scene extends JPanel {
         return ball;
     }
 
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    public Player getPlayer2() {
-        return player2;
+    public Map<String, Player> getPlayers() {
+        return players;
     }
 }
