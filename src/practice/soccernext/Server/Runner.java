@@ -5,6 +5,7 @@ import lesson.networks.upd.Message;
 
 import java.io.*;
 import java.net.*;
+import java.util.Arrays;
 
 public class Runner {
 
@@ -12,30 +13,46 @@ public class Runner {
 
         int clientCounter = 0;
 
-        DatagramSocket broadcast = new DatagramSocket();
+        MulticastSocket broadcast = new MulticastSocket();
         broadcast.setBroadcast(true);
 
-        byte[] buff = new byte[64];
-        DatagramPacket packet = new DatagramPacket(buff, buff.length);
-        DatagramSocket listener = new DatagramSocket(8000);
+        MulticastSocket listener = new MulticastSocket(8000);
+        listener.joinGroup(InetAddress.getByName("224.0.0.2"));
         listener.setSoTimeout(60_000);
         System.out.println("server was run on 8000");
 
         while (true) {
+
+            byte[] buff = new byte[512];
+            DatagramPacket packet = new DatagramPacket(buff, buff.length);
             listener.receive(packet);
 
-            String s = new String(packet.getData());
-            System.out.println("in:"+s);
+            //System.out.println(packet.getLength());
+            //System.out.println(Arrays.toString(packet.getData()));
+
+
+            String s  = new String(packet.getData(), 0, packet.getLength(), "UTF-8");
+
+            //System.out.println(buff.length);
+            //System.out.println(packet.getLength());
+            System.out.println("receive:("+s+")("+s.length()+")");
+
             if(s.startsWith("connect")) {
                 String connectMessage = String.format("connect:player%d",clientCounter++);
-                byte[] data = connectMessage.getBytes();
-                DatagramPacket answer = new DatagramPacket(data, data.length, InetAddress.getLocalHost(), 8001);
+
+                DatagramPacket answer = new DatagramPacket(connectMessage.getBytes(), connectMessage.getBytes().length, InetAddress.getByName("224.0.0.2"), 8001);
+                broadcast.setTimeToLive(1);
                 broadcast.send(answer);
-                System.out.println("out"+connectMessage);
+
+                System.out.println("out:"+connectMessage);
             } else {
-                DatagramPacket answer = new DatagramPacket(packet.getData(), packet.getLength(), InetAddress.getLocalHost(), 8001);
+
+                //byte[] bb = String.format("move:player0#%f#%f",1f,3f).getBytes();
+                DatagramPacket answer = new DatagramPacket(packet.getData(), packet.getLength(), InetAddress.getByName("224.0.0.2"), 8001);
+                //DatagramPacket answer = new DatagramPacket(bb, bb.length, InetAddress.getByName("224.0.0.2"), 8001);
+                broadcast.setTimeToLive(1);
                 broadcast.send(answer);
-                System.out.println("out"+new String(packet.getData()));
+                //System.out.println("out:"+new String(packet.getData()));
             }
         }
 

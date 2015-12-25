@@ -6,7 +6,7 @@ import java.net.SocketException;
 public class Runner {
 
     public static void main(String[] args) throws IOException {
-        boolean isNetwork = false;
+        boolean isNetwork = true;
         Game game = new Game(isNetwork);
         game.start();
     }

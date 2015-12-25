@@ -54,6 +54,9 @@ public class Game extends JFrame {
 
         timer.start();
 
+
+        final String[] currentUser = {""};
+
         if(!isNetwork) {
             scene.getPlayers().put("player1", new Player(0,0, 20, new Color(17, 18, 255) ));
             scene.getPlayers().put("player2", new Player(0,0, 20, new Color(255, 10, 5) ));
@@ -156,15 +159,98 @@ public class Game extends JFrame {
             receiver.onReceive(new ReceiveEvent() {
                 @Override
                 public void receive(String message) {
+
+                    //System.out.println("recv:"+message);
+
                     String[] s = message.split(":");
                     if(s[0].equals("connect")) {
-                        scene.getPlayers().put(s[1], new Player(0,0, 20, new Color(17, 18, 255) ));
+                        Player p = new Player(0,0, 20, new Color(17, 18, 255));
+                        scene.getPlayers().put(s[1], p );
+                        currentUser[0] = s[1];
+
+                        addKeyListener(new KeyAdapter() {
+
+                            float vx= 0;
+                            float vy =0;
+
+                            @Override
+                            public void keyPressed(KeyEvent e) {
+
+                                switch (e.getKeyCode()) {
+                                    case KeyEvent.VK_UP:
+                                        vy = -p.getSpeed();
+                                        break;
+                                    case KeyEvent.VK_RIGHT:
+                                        vx = p.getSpeed();
+                                        break;
+                                    case KeyEvent.VK_DOWN:
+                                        vy = p.getSpeed();
+                                        break;
+                                    case KeyEvent.VK_LEFT:
+                                        vx = -p.getSpeed();
+                                        break;
+                                    case KeyEvent.VK_SPACE:
+                                        //scene.hitDown(p1);
+                                        break;
+                                }
+
+                                try {
+                                    ActiveHandler.send(  String.format("move:%s#%f#%f",currentUser[0], vx,vy));
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void keyReleased(KeyEvent e) {
+                                switch (e.getKeyCode()) {
+                                    case KeyEvent.VK_UP:
+                                        vy = 0;
+                                        break;
+                                    case KeyEvent.VK_RIGHT:
+                                        vx = 0;
+                                        break;
+                                    case KeyEvent.VK_DOWN:
+                                        vy = 0;
+                                        break;
+                                    case KeyEvent.VK_LEFT:
+                                        vx = 0;
+                                        break;
+                                    case KeyEvent.VK_SPACE:
+                                        //scene.hitUp(p1);
+                                        break;
+                                }
+
+                                try {
+                                    ActiveHandler.send(  String.format("move:%s#%f#%f",currentUser[0], vx,vy));
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+                            }
+                        });
+
+                    } else if(s[0].equals("move")) {
+                        String[] data = s[1].trim().split("#");
+                        if(data.length==3) {
+
+                            String player = data[0];
+                            float vx = Float.parseFloat(data[1].replace(",","."));
+                            float vy = Float.parseFloat(data[2].replace(",","."));
+                            //System.out.println("++ "+vx+"  "+vy);
+
+                            Player p = scene.getPlayers().get(player);
+                            if(p!=null) {
+                                p.setVelocityX(vx);
+                                p.setVelocityY(vy);
+                            }
+                        }
                     }
                 }
             });
             receiver.startListening();
-
             ActiveHandler.send("connect");
+
+
         }
 
     }
