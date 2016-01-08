@@ -7,13 +7,15 @@
 Домашняя страница
 
 <p>
-${message}
+Добро пожаловать ${message}
 </p>
+<!-- 
 <form method="post">
       <p>title</p>
       <input type="number" name="id">
       <input type="text" name="title">
       <input type="submit" value="Добавить">
     </form>
+ -->
 </body>
 </html>
