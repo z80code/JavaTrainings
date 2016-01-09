@@ -1,5 +1,8 @@
 package com.itclass.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HomeController {
+	
+	//HttpServletRequest  request;
 	
 	//@RequestMapping("/home")
 	//@ResponseBody
@@ -63,7 +68,6 @@ public class HomeController {
 	
 	@RequestMapping(value="/home", method=RequestMethod.POST)
 	public ModelAndView postHome(@RequestBody Post val ) {	
-		
 		System.out.println(val);
 		return new ModelAndView("home","val", val );
 	}
