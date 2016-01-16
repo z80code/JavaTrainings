@@ -2,6 +2,7 @@ package lesson.networks.tcpchat.client;
 
 
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.Scanner;
 
 public class RunConsoleClient {

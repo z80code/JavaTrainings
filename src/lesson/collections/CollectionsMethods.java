@@ -61,7 +61,6 @@ public class CollectionsMethods {
 
         System.out.println(n);
 
-
     }
 }
 

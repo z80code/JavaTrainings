@@ -1,5 +1,7 @@
 package lesson;
 
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.Iterator;
 
 public class Ov {
