@@ -4,12 +4,14 @@ public class Post {
 	
 	private Integer id;
 	private String title;
+	private String content;
 	
 	public Post() {	}
 
-	public Post(Integer id, String title) {
+	public Post(Integer id, String title, String content) {
 		this.id = id;
 		this.title = title;
+		this.content = content;
 	}
 
 	public int getId() {
@@ -28,9 +30,16 @@ public class Post {
 		this.title = title;
 	}
 
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	@Override
 	public String toString() {
-		return "Post [id=" + id + ", title=" + title + "]";
+		return "Post [id=" + id + ", title=" + title + ", content=" + content + "]";
 	}
-	
 }
