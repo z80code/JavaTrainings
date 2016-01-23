@@ -33,6 +33,6 @@ public class UserService {
 	
 	public synchronized  boolean addUser(User user) {
 	
-	}
+		return false;
 	}
 }
