@@ -1,6 +1,16 @@
 package com.itclass.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Users")
 public class User {
+	
+	@Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
 	private String email;
 	private String password;
 	private Role role;
@@ -12,6 +22,14 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.role = role;
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
@@ -36,6 +54,12 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", password=" + password + ", role=" + role + "]";
 	} 
+	
 	
 }
