@@ -1,4 +1,4 @@
-package com.itclass;
+package com.itclass.model;
 
 public class MyClass {
 	

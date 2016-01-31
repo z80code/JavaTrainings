@@ -1,4 +1,4 @@
-package com.itclass;
+package com.itclass.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +11,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.itclass.model.MyClass;
 
 
 @WebServlet("/Test")
@@ -52,7 +54,10 @@ public class Test extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		//sdf
+		System.out.println(request.getParameter("info"));
+		
 		doGet(request, response);
 	}
 }
