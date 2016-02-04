@@ -1,6 +1,7 @@
 package com.itclass.controllers;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ public class DateServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		
 		request.setAttribute("date", new Date());
 		request
 			.getRequestDispatcher("WEB-INF/views/date.jsp")
