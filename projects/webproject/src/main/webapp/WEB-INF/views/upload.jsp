@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -9,14 +10,10 @@
 </head>
 <body>
 
-<h1>News</h1>
-
-<c:forEach var="item" items="${articles}">
-	<p> ${item.id}</p>
-	<p> <a href="#"> ${item.title}</a></p>
-	<p>  ${item.author}  / ${item.date}  </p>
-	<hr>
-</c:forEach>
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <input type="submit" />
+</form>
 
 </body>
 </html>
