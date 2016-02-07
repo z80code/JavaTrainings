@@ -9,11 +9,11 @@
 </head>
 <body>
 
-<h1>News</h1>
+<h1>News <a href="create">+</a></h1> 
 
 <c:forEach var="item" items="${articles}">
 	<p> ${item.id}</p>
-	<p> <a href="#"> ${item.title}</a></p>
+	<p> <a href="article?id=${item.id}"> ${item.title}</a></p>
 	<p>  ${item.author}  / ${item.date}  </p>
 	<hr>
 </c:forEach>

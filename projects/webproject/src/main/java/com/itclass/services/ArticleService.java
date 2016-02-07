@@ -1,10 +1,12 @@
 package com.itclass.services;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +16,9 @@ import com.itclass.model.Article;
 public class ArticleService implements AutoCloseable {
 	
 	final private String SELECT_QUERY = "SELECT * FROM ARTICLES ";
-	final private String 
-		GET_BY_ID_QUERY = "SELECT * FROM ARTICLES WHERE id=?";
+	final private String GET_BY_ID_QUERY = "SELECT * FROM ARTICLES WHERE id=?";
+	final private String INSERT_QUERY =
+			"insert into articles(title, author, text, date) values( ?, ?, ?, ?);";
 	
 	final private Connection connection;
 	
@@ -31,22 +34,32 @@ public class ArticleService implements AutoCloseable {
 		connection = DriverManager.getConnection(url, user, password);
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException, Exception {
+	public void save(Article article) throws Exception {
 		
-		try(ArticleService s = new ArticleService()) {
-			List<Article> articles = s.getAll();
-			System.out.println(articles);
-		}	
-	}
-	
-	public void save(Article article) {
+		try( PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY) ) {
+			
+			preparedStatement.setString(1, article.getTitle());
+			preparedStatement.setString(2, article.getAuthor());
+			preparedStatement.setString(3, article.getText());
+			
+			java.sql.Date date = new java.sql.Date(   article.getDate().getTime()  );
+			preparedStatement.setDate(4, date);
+			
+			
+			int changed = preparedStatement.executeUpdate();
+			
+			if(changed==0) {
+				throw new Exception("Record not saved");
+			}
+			
+		}
 		
 	}
 	
 	public List<Article> getAll() throws SQLException {
 		
 		List<Article> articles = new ArrayList<>();
-		
+	
 		try (PreparedStatement statement 
 				= connection.prepareStatement(SELECT_QUERY) ) {
 			
@@ -69,6 +82,30 @@ public class ArticleService implements AutoCloseable {
 		}
 		
 		return articles;
+	}
+	
+	public Article getById(int id) throws SQLException {
+				
+		Article article = null;
+		
+		try( PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_QUERY) ) {
+			
+			preparedStatement.setInt(1, id);
+			
+			ResultSet result = preparedStatement.executeQuery();
+			
+			if(result.next()) {
+				
+				String title = result.getString("title");
+				String author = result.getString("author");
+				String text = result.getString("text");
+				Timestamp date = result.getTimestamp("date");
+				
+				article = new Article(id, title, author, text, date);
+			}
+		}
+		
+		return article;
 	}
 
 	@Override
