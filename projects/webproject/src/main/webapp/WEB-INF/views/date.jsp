@@ -12,6 +12,8 @@
 
 <a href="date?date=${date.time}"> ddd </a>
 
+<a href="upload" >link</a>
+
 <p> <fmt:formatDate value="${date}" type="both" dateStyle="full" timeStyle="short" />  </p>
 <p> <fmt:formatDate value="${date}" type="date" dateStyle="full" timeStyle="short" />  </p>
 <p> <fmt:formatDate pattern="dd.MM.yyyy" value="${date}" /> </p>

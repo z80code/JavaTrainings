@@ -17,12 +17,23 @@ import com.itclass.services.ArticleService;
 public class CreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 				
 		request
 			.getRequestDispatcher("WEB-INF/views/create.jsp")
 			.forward(request, response);
 	}
+	
+	private boolean isValid(String title, String author, String text) {
+		if(title==null||author==null||text==null) {
+			return false;
+		}
+		return (title.length()>0 && 
+				author.length()>0 &&
+				text.length()>0);
+	}
+
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,20 +43,26 @@ public class CreateServlet extends HttpServlet {
 		 
 		 Article article = new Article(-1,title, author, text, new Date());
 		 
-		 // if
-		 // setAttribute article
-		 // setAttribute errormessage
-		 
-		 try(ArticleService service = new ArticleService()) {
-			
-			 service.save(article);			 
-			 resp.sendRedirect("home");
+		 if(isValid(title, author, text)) {
 			 
-		 } catch (Exception e) {
-			
-			 // doget
-			e.printStackTrace();
-		}
-
+			 try(ArticleService service = new ArticleService()) {
+				
+				 service.save(article);			 
+				 resp.sendRedirect("home");
+				 
+			 } catch (Exception e) {
+				
+				 // doget
+				e.printStackTrace();
+			}
+		 } else {
+			 
+			 req.setAttribute("error", "Empty fields!");
+			 req.setAttribute("article", article);
+			 
+			 req
+				.getRequestDispatcher("WEB-INF/views/create.jsp")
+				.forward(req, resp);
+		 }
 	}
 }

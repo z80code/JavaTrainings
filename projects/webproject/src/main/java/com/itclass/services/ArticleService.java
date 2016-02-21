@@ -19,6 +19,8 @@ public class ArticleService implements AutoCloseable {
 	final private String GET_BY_ID_QUERY = "SELECT * FROM ARTICLES WHERE id=?";
 	final private String INSERT_QUERY =
 			"insert into articles(title, author, text, date) values( ?, ?, ?, ?);";
+	final private String DELETE_QUERY =
+			"DELETE FROM articles where id = ?";
 	
 	final private Connection connection;
 	
@@ -42,8 +44,11 @@ public class ArticleService implements AutoCloseable {
 			preparedStatement.setString(2, article.getAuthor());
 			preparedStatement.setString(3, article.getText());
 			
-			java.sql.Date date = new java.sql.Date(   article.getDate().getTime()  );
-			preparedStatement.setDate(4, date);
+			java.sql.Timestamp date = new java.sql.Timestamp( 
+					article.getDate().getTime() 
+				);
+			
+			preparedStatement.setTimestamp(4, date);
 			
 			
 			int changed = preparedStatement.executeUpdate();
@@ -82,6 +87,13 @@ public class ArticleService implements AutoCloseable {
 		}
 		
 		return articles;
+	}
+	
+	public void remove(int id) {
+		// TODO создать PreparedStatement
+		// TODO задать для PreparedStatement id
+		// TODO выполнить запрос 
+		
 	}
 	
 	public Article getById(int id) throws SQLException {

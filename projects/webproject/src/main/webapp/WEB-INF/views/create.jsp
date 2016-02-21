@@ -10,22 +10,21 @@
 
 <h1>New article</h1>
 
+<p style="color: red;"> ${error} </p>
+
 <form method="post">
 
 <label >title</label>
 <br>
-<input type="text" name="title">
+<input type="text" name="title" value="${article.title}">
 <br>
-
-<!-- ${article} ${errormessage} -->
-
 <label>author</label>
 <br>
-<input type="text" name="author">
+<input type="text" name="author" value="${article.author}">
 <br>
-<textarea rows="10" cols="20" name="text"></textarea>
+<textarea rows="10" cols="20" name="text" >${article.text}</textarea>
 <br>
-<input type="submit" value="save article"> 
+<input type="submit" value="save article" > 
 <a href="home">don't save it</a>
 
 </form>

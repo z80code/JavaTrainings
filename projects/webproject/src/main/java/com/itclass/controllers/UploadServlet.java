@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -20,6 +21,9 @@ public class UploadServlet extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		System.out.println(request.getHeader("referer"));
+		
 		request.getRequestDispatcher("WEB-INF/views/upload.jsp").forward(request, response);
 	}
 
@@ -30,8 +34,14 @@ public class UploadServlet extends HttpServlet {
 		 Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 		    String fileName = filePart.getSubmittedFileName();
 		    InputStream in = filePart.getInputStream();
+		   
 		    
-		    OutputStream out = new FileOutputStream("e:/"+fileName);
+		    
+		    Map<String, String> env = System.getenv();
+	        
+		    
+		    OutputStream out = new FileOutputStream(env.get("file_locations")+"/"+fileName);
+		    //OutputStream out = new FileOutputStream("e:/"+fileName);
 		    
 		    int b;
 		    while((b=in.read())!=-1) {
